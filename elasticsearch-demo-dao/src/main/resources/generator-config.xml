@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <!--
+        说明:
+            Mybatis generator工具，用于生成：实体bean、Map映射文件、Dao类
+    -->
+
+    <!-- mysql驱动jar包本地路径 -->
+    <classPathEntry location="${user.home}/.m2/repository/mysql/mysql-connector-java/5.1.34/mysql-connector-java-5.1.34.jar"/>
+
+    <context id="retail">
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据源配置 -->
+        <jdbcConnection
+                driverClass="com.mysql.jdbc.Driver"
+                connectionURL="jdbc:mysql://172.16.183.100:3306/spark?useSSL=false"
+                userId="root"
+                password="123456"
+        />
+
+        <!--实体bean路径-->
+        <javaModelGenerator targetPackage="com.luckychacha.elasticsearch.model.entity"
+                            targetProject="elasticsearch-demo-model/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="false"/>
+        </javaModelGenerator>
+
+        <!--Map映射文件路径-->
+        <sqlMapGenerator targetPackage="sqlmapping.elasticsearch"
+                         targetProject="elasticsearch-demo-dao/src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!--Dao路径-->
+        <javaClientGenerator targetPackage="com.luckychacha.elasticsearch.dao"
+                             targetProject="elasticsearch-demo-dao/src/main/java"
+                             type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <table
+                tableName="test"
+                domainObjectName="test"
+                enableCountByExample="false"
+                enableUpdateByExample="false"
+                enableDeleteByExample="false"
+                enableSelectByExample="false"
+                selectByExampleQueryId="false"
+        >
+            <columnOverride column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <columnOverride column="message" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </table>
+
+    </context>
+</generatorConfiguration>
