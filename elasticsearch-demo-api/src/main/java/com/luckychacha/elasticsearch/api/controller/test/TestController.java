@@ -1,11 +1,10 @@
-package com.luckychacha.elasticsearch.api.controller;
+package com.luckychacha.elasticsearch.api.controller.test;
 
-import com.luckychacha.elasticsearch.dao.TestMapper;
-import com.luckychacha.elasticsearch.model.entity.Test;
-import com.luckychacha.elasticsearch.service.TestService;
+import com.luckychacha.elasticsearch.model.entity.elasticsearch.EsTest;
+import com.luckychacha.elasticsearch.service.elasticsearch.EsTestService;
+import com.luckychacha.elasticsearch.service.mysql.TestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,18 +16,18 @@ import java.util.List;
 @RequestMapping(value = "/")
 public class TestController {
 
-    private TestService testService;
+    private EsTestService estestService;
 
 
     @Autowired
-    public TestController(TestService testService) {
-        this.testService = testService;
+    public TestController(EsTestService esTestService) {
+        this.estestService = estestService;
     }
 
     @GetMapping(value = "get-test-list")
     public void getTest() {
-        Test test = new Test();
-        List<Test> testList = testService.getAll();
+        EsTest test = new EsTest();
+        List<EsTest> testList = estestService.getAll();
         log.info("res:[{}]", testList);
     }
 }

@@ -1,6 +1,6 @@
-package com.luckychacha.elasticsearch.dao;
+package com.luckychacha.elasticsearch.dao.mysql;
 
-import com.luckychacha.elasticsearch.model.entity.Test;
+import com.luckychacha.elasticsearch.model.entity.mysql.Test;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 

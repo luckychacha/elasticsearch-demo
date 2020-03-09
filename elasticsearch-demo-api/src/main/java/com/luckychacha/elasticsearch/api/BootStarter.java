@@ -7,7 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan("com.luckychacha.elasticsearch")
-@MapperScan("com.luckychacha.elasticsearch.dao")
 public class BootStarter {
     public static void main(String[] args) {
         SpringApplication.run(BootStarter.class, args);

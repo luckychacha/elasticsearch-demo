@@ -1,10 +1,9 @@
-package com.luckychacha.elasticsearch.service.impl;
+package com.luckychacha.elasticsearch.service.mysql.impl;
 
-import com.luckychacha.elasticsearch.dao.TestMapper;
-import com.luckychacha.elasticsearch.model.entity.Test;
-import com.luckychacha.elasticsearch.service.TestService;
+import com.luckychacha.elasticsearch.dao.mysql.TestMapper;
+import com.luckychacha.elasticsearch.model.entity.mysql.Test;
+import com.luckychacha.elasticsearch.service.mysql.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
