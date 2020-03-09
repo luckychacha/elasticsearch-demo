@@ -42,10 +42,8 @@ public class ElasticsearchController {
 
     @Autowired
     public ElasticsearchController(EsTestService esTestService,
-                                   TestService testService,
                                    RestHighLevelClient restHighLevelClient) {
         this.esTestService = esTestService;
-        this.testService = testService;
         this.restHighLevelClient = restHighLevelClient;
     }
 

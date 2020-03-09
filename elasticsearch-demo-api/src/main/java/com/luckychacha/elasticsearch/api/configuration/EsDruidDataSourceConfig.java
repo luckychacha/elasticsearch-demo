@@ -33,9 +33,8 @@ public class EsDruidDataSourceConfig {
 
     /**
      * SqlSessionFactory配置
-     * @param dataSource
+     * @param dataSource 数据源
      * @return SqlSessionFactory
-     * @throws Exception
      */
     @Bean(name = "esSqlSessionFactory")
     public SqlSessionFactory bigdataSqlSessionFactory(@Qualifier("esDataSource") DataSource dataSource) throws Exception {
