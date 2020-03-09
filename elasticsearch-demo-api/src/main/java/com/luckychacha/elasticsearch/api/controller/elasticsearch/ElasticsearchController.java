@@ -276,9 +276,8 @@ public class ElasticsearchController {
     @GetMapping(value = "test-sql")
     public String testSql() {
         ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
-        List<EsTest> aaa =  esTestService.getAll();
         try {
-            return objectMapper.writeValueAsString(aaa);
+            return objectMapper.writeValueAsString(esTestService.getAll());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
