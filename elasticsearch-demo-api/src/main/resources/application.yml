@@ -13,8 +13,6 @@ spring:
   datasource:
     username: root
     password: 123456
-#    username: test
-#    password: cine123456
     url: jdbc:log4jdbc:mysql://172.16.183.100:3306/spark?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8&useSSL=false
     driver-class-name: net.sf.log4jdbc.DriverSpy
     type: com.alibaba.druid.pool.DruidDataSource
