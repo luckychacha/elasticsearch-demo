@@ -1,5 +1,6 @@
 package com.luckychacha.elasticsearch.model.entity.mysql;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -8,8 +9,9 @@ import java.time.LocalDateTime;
 public class Test {
     private String id;
 
-    private String message;
+    private JsonContentDTO message;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime postDate;
 
     private String user;

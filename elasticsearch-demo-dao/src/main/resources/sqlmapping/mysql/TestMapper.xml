@@ -11,10 +11,10 @@
     id, message, postDate, user
   </sql>
   <insert id="insert" parameterType="com.luckychacha.elasticsearch.model.entity.mysql.Test">
-    insert into test (id, message, postDate, 
-      user)
+    insert into test (id, message, postDate,
+                      user)
     values (#{id,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{postDate,jdbcType=TIMESTAMP},
-      #{user,jdbcType=VARCHAR})
+            #{user,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.luckychacha.elasticsearch.model.entity.mysql.Test">
     insert into test
@@ -49,7 +49,7 @@
   </insert>
   <select id="selectTest" resultMap="BaseResultMap">
     select
-    *
+      *
     from test
   </select>
 </mapper>

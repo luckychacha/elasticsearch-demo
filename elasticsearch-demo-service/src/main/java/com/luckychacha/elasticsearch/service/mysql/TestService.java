@@ -5,4 +5,7 @@ import com.luckychacha.elasticsearch.model.entity.mysql.Test;
 import java.util.List;
 public interface TestService {
     List<Test> getAll();
+    String getOne();
+
+    int add(Test test);
 }

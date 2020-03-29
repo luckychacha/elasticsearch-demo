@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ElasticsearchConfiguration {
     //ES地址
-    @Value("${spring.data.elasticsearch.host}")
+    @Value("${data.elasticsearch.host}")
     private String host;
     //ES端口
-    @Value("${spring.data.elasticsearch.port}")
+    @Value("${data.elasticsearch.port}")
     private int port;
 
     /**

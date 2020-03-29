@@ -6,44 +6,122 @@ server:
 mybatis:
   mapper-locations: classpath:sqlmapping/**/*.xml
   type-aliases-package: com.luckychacha.elasticsearch.model.entity
+  type-handlers-package: com.luckychacha.elasticsearch.dao.handler
+  configuration:
+    vfs-impl: org.mybatis.spring.boot.autoconfigure.SpringBootVFS
+
 
 spring:
   application:
     name: elasticsearch-demo
-  datasource:
-    username: root
-    password: 123456
-#    username: test
-#    password: cine123456
-    url: jdbc:log4jdbc:mysql://172.16.183.100:3306/spark?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8&useSSL=false
-    driver-class-name: net.sf.log4jdbc.DriverSpy
-    type: com.alibaba.druid.pool.DruidDataSource
-#    url: jdbc:mysql://172.16.183.100:3306/spark?useUnicode=true&characterEncoding=utf-8&useSSL=false
-#    driver-class-name: com.mysql.jdbc.Driver
-    filters: log4j2
-    min-idle: 2
-    max-wait: 6000
-    max-active: 100
-    initial-size: 10
-    time-between-eviction-runs-millis: 60000
-    min-evictable-idle-time-millis: 30000
-    validation-query: select 1 from dual
-    test-while-idle: true
-    test-on-borrow: true
-    test-on-return: false
-    pool-prepared-statements: true
-    max-open-prepared-statements: 20
-    log-abandoned: true
-    remove-abandoned: true
-    remove-abandoned-timeout: 1800
-    es:
-      url: jdbc:es://http://127.0.0.1:9200
-      driver-class-name: org.elasticsearch.xpack.sql.jdbc.EsDriver
-      mapperLocations: classpath:sqlmapping/elasticsearch/*.xml
-      configLocation: classpath:mybatis.cfg.xml
-  data:
-    elasticsearch:
-      host: 127.0.0.1
-      port: 9200
-      username: test
-      password: test
+  shardingsphere:
+    datasource:
+      names: master, slave1
+      master:
+        validationQuery: SELECT 1 FROM DUAL
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        url: jdbc:mysql://172.16.183.100:3306/spark?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8&useSSL=false
+        username: root
+        password: 123456
+        min-idle: 2
+        max-wait: 6000
+        max-active: 100
+        initial-size: 10
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 30000
+        validation-query: select 1 from dual
+        test-while-idle: true
+        test-on-borrow: true
+        test-on-return: false
+        pool-prepared-statements: true
+        max-open-prepared-statements: 20
+        log-abandoned: true
+        remove-abandoned: true
+        remove-abandoned-timeout: 1800
+      slave1:
+        validationQuery: SELECT 1 FROM DUAL
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: net.sf.log4jdbc.DriverSpy
+        url: jdbc:log4jdbc:mysql://172.16.183.100:3306/spark?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8&useSSL=false
+        username: root
+        password: 123456
+        filters: log4j2
+        min-idle: 2
+        max-wait: 6000
+        max-active: 100
+        initial-size: 10
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 30000
+        validation-query: select 1 from dual
+        test-while-idle: true
+        test-on-borrow: true
+        test-on-return: false
+        pool-prepared-statements: true
+        max-open-prepared-statements: 20
+        log-abandoned: true
+        remove-abandoned: true
+        remove-abandoned-timeout: 1800
+    props:
+      sql:
+        show: true
+    sharding:
+      default-data-source-name: master
+      #    default-database-strategy:
+      #      standard:
+      #        sharding-column: postDate
+      #        precise-algorithm-class-name: com.luckychacha.elasticsearch.api.configuration.PShardingAlgorithm
+      #        range-algorithm-class-name: com.luckychacha.elasticsearch.api.configuration.RShardingAlgorithm
+      #    default-table-strategy:
+      #      standard:
+      #        sharding-column: postDate
+      #        precise-algorithm-class-name: com.luckychacha.elasticsearch.api.configuration.PShardingAlgorithm
+      #        range-algorithm-class-name: com.luckychacha.elasticsearch.api.configuration.RShardingAlgorithm
+      tables:
+        test_sharding:
+          actual-data-nodes: master.test_sharding_$->{202003..202004}
+          table-strategy:
+            standard:
+              sharding-column: postDate
+              precise-algorithm-class-name: com.luckychacha.elasticsearch.api.configuration.PShardingAlgorithm
+              range-algorithm-class-name: com.luckychacha.elasticsearch.api.configuration.RShardingAlgorithm
+          keyGenerator:
+            type: SNOWFLAKE
+            column: id
+#spring:
+#  application:
+#    name: elasticsearch-demo
+#  datasource:
+#    username: root
+#    password: 123456
+#    url: jdbc:log4jdbc:mysql://172.16.183.100:3306/spark?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8&useSSL=false
+#    driver-class-name: net.sf.log4jdbc.DriverSpy
+#    type: com.alibaba.druid.pool.DruidDataSource
+##    driver-class-name: com.mysql.jdbc.Driver
+#    filters: log4j2
+#    min-idle: 2
+#    max-wait: 6000
+#    max-active: 100
+#    initial-size: 10
+#    time-between-eviction-runs-millis: 60000
+#    min-evictable-idle-time-millis: 30000
+#    validation-query: select 1 from dual
+#    test-while-idle: true
+#    test-on-borrow: true
+#    test-on-return: false
+#    pool-prepared-statements: true
+#    max-open-prepared-statements: 20
+#    log-abandoned: true
+#    remove-abandoned: true
+#    remove-abandoned-timeout: 1800
+es:
+  url: jdbc:es://http://127.0.0.1:9200
+  driver-class-name: org.elasticsearch.xpack.sql.jdbc.EsDriver
+  mapperLocations: classpath:sqlmapping/elasticsearch/*.xml
+  configLocation: classpath:mybatis.cfg.xml
+data:
+  elasticsearch:
+    host: 127.0.0.1
+    port: 9200
+    username: test
+    password: test

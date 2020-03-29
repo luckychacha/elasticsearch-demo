@@ -1,33 +1,86 @@
 package com.luckychacha.elasticsearch.api.controller.test;
 
-import com.luckychacha.elasticsearch.model.entity.elasticsearch.EsTest;
-import com.luckychacha.elasticsearch.service.elasticsearch.EsTestService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.luckychacha.elasticsearch.common.util.JsonUtil;
+import com.luckychacha.elasticsearch.model.entity.mysql.Test;
+import com.luckychacha.elasticsearch.model.entity.mysql.TestSharding;
+import com.luckychacha.elasticsearch.model.entity.mysql.TestShardingQueryVO;
 import com.luckychacha.elasticsearch.service.mysql.TestService;
+import com.luckychacha.elasticsearch.service.mysql.TestShardingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/")
+@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class TestController {
 
-    private EsTestService estestService;
+    private TestService testService;
+    private TestShardingService testShardingService;
 
 
     @Autowired
-    public TestController(EsTestService esTestService) {
-        this.estestService = estestService;
+    public TestController(TestService testService,
+                          TestShardingService testShardingService) {
+        this.testService =testService;
+        this.testShardingService = testShardingService;
+    }
+
+    @PostMapping(value = "add-test")
+    public void addTest(@RequestBody Test test) {
+        this.testService.add(test);
     }
 
     @GetMapping(value = "get-test-list")
-    public void getTest() {
-        EsTest test = new EsTest();
-        List<EsTest> testList = estestService.getAll();
-        log.info("res:[{}]", testList);
+    public String getList() {
+
+        return JsonUtil.toJson(testService.getAll());
+    }
+
+
+    @GetMapping(value = "get-test-sharding-list")
+    public String getAllTestSharding() {
+        return JsonUtil.toJson(this.testShardingService.getAll());
+    }
+
+
+    @PostMapping(value = "add-test-sharding")
+    public void addTestSharding(@RequestBody TestSharding testSharding) {
+        this.testShardingService.add(testSharding);
+    }
+
+
+    @PostMapping(value = "edit-test-sharding")
+    public void editTestSharding(@RequestBody TestSharding testSharding) {
+        this.testShardingService.edit(testSharding);
+    }
+
+    @PostMapping(value = "get-test-sharding-range")
+    public List<TestSharding> getTestShardingRange(@RequestBody TestShardingQueryVO testShardingQueryVO) {
+
+        return testShardingService.getByRange(testShardingQueryVO.getStartDate(), testShardingQueryVO.getEndDate());
+    }
+
+    @GetMapping(value = "get-test-sharding-by-id/{id}")
+    public TestSharding getTestSharding(@PathVariable("id") BigInteger id) {
+        return testShardingService.getById(id);
+    }
+
+
+    @DeleteMapping(value = "delete-test-sharding-by-id/{id}")
+    public void deleteTestSharding(@PathVariable("id") BigInteger id) {
+        testShardingService.delete(id);
+    }
+
+    @GetMapping(value = "complex-test")
+    public String getComplex () {
+        return testService.getOne();
     }
 }

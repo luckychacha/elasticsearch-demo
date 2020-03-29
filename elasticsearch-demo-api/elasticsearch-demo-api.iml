@@ -22,7 +22,12 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="elasticsearch-demo-service" />
     <orderEntry type="module" module-name="elasticsearch-demo-dao" />
+    <orderEntry type="library" name="Maven: org.mybatis.generator:mybatis-generator-core:1.3.5" level="project" />
+    <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.4.6" level="project" />
+    <orderEntry type="library" name="Maven: org.mybatis:mybatis-typehandlers-jsr310:1.0.1" level="project" />
     <orderEntry type="module" module-name="elasticsearch-demo-model" />
+    <orderEntry type="module" module-name="elasticsearch-demo-common" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.6" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.2.5.RELEASE" level="project" />
@@ -39,7 +44,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:5.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis.spring.boot:mybatis-spring-boot-autoconfigure:1.3.5" level="project" />
-    <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.4.6" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis-spring:1.3.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.18.10" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.log4jdbc:log4jdbc:1.2" level="project" />
@@ -75,7 +79,6 @@
     <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-core:7.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-secure-sm:7.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-x-content:7.4.1" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.10.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-smile:2.10.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.10.2" level="project" />
@@ -112,12 +115,37 @@
     <orderEntry type="library" name="Maven: com.github.spullara.mustache.java:compiler:0.9.3" level="project" />
     <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.8.3" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch.plugin:x-pack-sql-jdbc:7.4.1" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.10.2" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.10.2" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.10.2" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.7" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-jdbc-spring-boot-starter:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-spring-boot-util:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-common:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-api:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.groovy:groovy:indy:2.4.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-jdbc-core:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-entry:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-parse-common:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-parse-spi:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.2" level="project" />
+    <orderEntry type="library" name="Maven: org.antlr:antlr4-runtime:4.7.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-parse-sql92:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-parse-mysql:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-parse-postgresql:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-parse-oracle:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-parse-sqlserver:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-preprocessor:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-route:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-rewrite:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-execute:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-core-merge:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shardingsphere:sharding-transaction-core:4.0.0-RC3" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:18.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.30" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-json:2.2.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.10.2" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.10.2" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.2" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-parameter-names:2.10.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-tomcat:2.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:9.0.31" level="project" />

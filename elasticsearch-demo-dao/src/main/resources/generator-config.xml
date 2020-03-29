@@ -25,28 +25,28 @@
         />
 
         <!--实体bean路径-->
-        <javaModelGenerator targetPackage="com.luckychacha.elasticsearch.model.entity"
+        <javaModelGenerator targetPackage="com.luckychacha.elasticsearch.model.entity.mysql"
                             targetProject="elasticsearch-demo-model/src/main/java">
             <property name="enableSubPackages" value="false"/>
             <property name="trimStrings" value="false"/>
         </javaModelGenerator>
 
         <!--Map映射文件路径-->
-        <sqlMapGenerator targetPackage="sqlmapping.elasticsearch"
+        <sqlMapGenerator targetPackage="sqlmapping.mysql"
                          targetProject="elasticsearch-demo-dao/src/main/resources">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
         <!--Dao路径-->
-        <javaClientGenerator targetPackage="com.luckychacha.elasticsearch.dao"
+        <javaClientGenerator targetPackage="com.luckychacha.elasticsearch.dao.mysql"
                              targetProject="elasticsearch-demo-dao/src/main/java"
                              type="XMLMAPPER">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
         <table
-                tableName="test"
-                domainObjectName="test"
+                tableName="test_sharding"
+                domainObjectName="TestSharding"
                 enableCountByExample="false"
                 enableUpdateByExample="false"
                 enableDeleteByExample="false"

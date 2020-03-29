@@ -13,7 +13,7 @@
   <insert id="insert" parameterType="com.luckychacha.elasticsearch.model.entity.elasticsearch.EsTest">
     insert into test (id, message, postDate, 
       user)
-    values (#{id,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{postdate,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{postDate,jdbcType=TIMESTAMP},
       #{user,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.luckychacha.elasticsearch.model.entity.elasticsearch.EsTest">
@@ -25,7 +25,7 @@
       <if test="message != null">
         message,
       </if>
-      <if test="postdate != null">
+      <if test="postDate != null">
         postDate,
       </if>
       <if test="user != null">
@@ -39,8 +39,8 @@
       <if test="message != null">
         #{message,jdbcType=VARCHAR},
       </if>
-      <if test="postdate != null">
-        #{postdate,jdbcType=TIMESTAMP},
+      <if test="postDate != null">
+        #{postDate,jdbcType=TIMESTAMP},
       </if>
       <if test="user != null">
         #{user,jdbcType=VARCHAR},
