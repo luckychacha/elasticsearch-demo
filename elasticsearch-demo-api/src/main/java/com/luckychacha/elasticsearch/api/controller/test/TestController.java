@@ -45,15 +45,21 @@ public class TestController {
     }
 
 
-    @GetMapping(value = "get-test-sharding-list")
-    public String getAllTestSharding() {
-        return JsonUtil.toJson(this.testShardingService.getAll());
+    @PostMapping(value = "get-test-sharding-list")
+    public String getAllTestSharding(@RequestBody TestShardingQueryVO testShardingQueryVO) {
+        return JsonUtil.toJson(this.testShardingService.getAll(testShardingQueryVO));
     }
 
 
     @PostMapping(value = "add-test-sharding")
     public void addTestSharding(@RequestBody TestSharding testSharding) {
         this.testShardingService.add(testSharding);
+    }
+
+
+    @PostMapping(value = "add-test-sharding-transaction/{succ}")
+    public int addTestShardingTransaction(@RequestBody TestSharding testSharding, @PathVariable("succ") int succ) {
+        return testShardingService.addTransaction(testSharding, succ);
     }
 
 
@@ -65,7 +71,7 @@ public class TestController {
     @PostMapping(value = "get-test-sharding-range")
     public List<TestSharding> getTestShardingRange(@RequestBody TestShardingQueryVO testShardingQueryVO) {
 
-        return testShardingService.getByRange(testShardingQueryVO.getStartDate(), testShardingQueryVO.getEndDate());
+        return testShardingService.getByRange(testShardingQueryVO);
     }
 
     @GetMapping(value = "get-test-sharding-by-id/{id}")

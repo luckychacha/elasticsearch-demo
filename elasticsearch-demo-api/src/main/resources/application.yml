@@ -14,6 +14,8 @@ mybatis:
 spring:
   application:
     name: elasticsearch-demo
+  tx:
+    point-cut: execution (* com.luckychacha.elasticsearch..service..*.*(..))
   shardingsphere:
     datasource:
       names: master, slave1
@@ -79,7 +81,8 @@ spring:
       #        range-algorithm-class-name: com.luckychacha.elasticsearch.api.configuration.RShardingAlgorithm
       tables:
         test_sharding:
-          actual-data-nodes: master.test_sharding_$->{202003..202004}
+#          actual-data-nodes: master.test_sharding_$->{201601..202112}
+          actual-data-nodes: master.test_sharding_201603,master.test_sharding_202003,master.test_sharding_202004,master.test_sharding_202005
           table-strategy:
             standard:
               sharding-column: postDate

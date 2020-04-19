@@ -68,13 +68,12 @@
     select
       *
     from test_sharding
-    where postDate between '2020-03-01' and '2020-04-30'
   </select>
   <select id="selectTestShardingByRange" resultMap="BaseResultMap">
     select
       *
     from test_sharding
-    where postDate between #{startDate,jdbcType=TIMESTAMP} and #{endDate,jdbcType=TIMESTAMP} limit 3,5
+    where postDate between #{startDate,jdbcType=TIMESTAMP} and #{endDate,jdbcType=TIMESTAMP} and user = #{user,jdbcType=VARCHAR} limit #{start,jdbcType=BIGINT},#{length,jdbcType=BIGINT}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap">
     select
