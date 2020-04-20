@@ -176,14 +176,13 @@ public class LeetCodeServiceImpl implements LeetCodeService {
         }
         /*
         1.找出数组中的旋转点【最小值】
-        2.如果目标值大于等于左边，那么从 0，旋转点-1 中寻找，否则，在 旋转点 到 最右 中找
+        2.如果目标值大于等于左边，那么从 0 到 旋转点-1 中寻找，否则，在 旋转点 到 最右 中找
          */
         int lowestIndex = findLowestIndex(leftIndex, rightIndex);
         if (nums[leftIndex] > target || lowestIndex == 0) {
             return binarySearch(lowestIndex, rightIndex);
-        } else {
-            return binarySearch(leftIndex, lowestIndex - 1);
         }
+        return binarySearch(leftIndex, lowestIndex - 1);
     }
 
     private int binarySearch(int leftIndex, int rightIndex) {
