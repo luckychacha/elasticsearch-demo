@@ -24,4 +24,10 @@ public class LeetCodeController {
     public Integer maxAreaOfIsland(@RequestBody int[][] grid) {
         return leetCodeService.maxAreaOfIsland(grid);
     }
+
+
+    @PostMapping("rotation/{target}")
+    public Integer rotation(@RequestBody int[] nums, @PathVariable("target") int target) {
+        return leetCodeService.rotation(nums, target);
+    }
 }

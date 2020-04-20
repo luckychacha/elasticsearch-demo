@@ -5,13 +5,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.luckychacha.elasticsearch.model.entity.leetcode.maxAreaOfIsland.Location;
 import com.luckychacha.elasticsearch.service.leetcode.LeetCodeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.*;
 
+@Slf4j
 @Service
 public class LeetCodeServiceImpl implements LeetCodeService {
+
+    private int[] nums;
+    private int target;
 
     /**
      * 三数之和
@@ -128,6 +133,93 @@ public class LeetCodeServiceImpl implements LeetCodeService {
 
 
         return result;
+    }
+
+    /**
+     * 搜索旋转排序数组
+     * 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
+     *
+     * ( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。
+     *
+     * 搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。
+     *
+     * 你可以假设数组中不存在重复的元素。
+     *
+     * 你的算法时间复杂度必须是 O(log n) 级别。
+     *
+     * 示例 1:
+     *
+     * 输入: nums = [4,5,6,7,0,1,2], target = 0
+     * 输出: 4
+     * 示例 2:
+     *
+     * 输入: nums = [4,5,6,7,0,1,2], target = 3
+     * 输出: -1
+     */
+
+    @Override
+    public int rotation(int[] nums, int target) {
+        this.nums = nums;
+        this.target = target;
+
+        int leftIndex = 0;
+        int rightIndex = nums.length - 1;
+
+        /*
+        异常处理
+         */
+        if (nums.length == 0) {
+            return -1;
+        }
+        if (nums.length == 1) {
+            return nums[0] == target ? 0 : -1;
+        }
+        /*
+        1.找出数组中的旋转点【最小值】
+        2.如果目标值大于等于左边，那么从 0，旋转点-1 中寻找，否则，在 旋转点 到 最右 中找
+         */
+        int lowestIndex = findLowestIndex(leftIndex, rightIndex);
+        if (nums[leftIndex] > target || lowestIndex == 0) {
+            return binarySearch(lowestIndex, rightIndex);
+        } else {
+            return binarySearch(leftIndex, lowestIndex - 1);
+        }
+    }
+
+    private int binarySearch(int leftIndex, int rightIndex) {
+        while (leftIndex <= rightIndex) {
+            int mid = leftIndex + (rightIndex - leftIndex) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            if (target < nums[mid]) {
+                rightIndex = mid - 1;
+            } else {
+                leftIndex = mid + 1;
+            }
+        }
+        return -1;
+    }
+
+    private int findLowestIndex(int leftIndex, int rightIndex) {
+        if (nums[leftIndex] < nums[rightIndex]) {
+            // 顺序数组
+            return 0;
+        }
+
+        while (leftIndex <= rightIndex) {
+            int midIndex = leftIndex + (rightIndex - leftIndex) / 2;
+            if (nums[midIndex] > nums[midIndex + 1]) {
+                return midIndex + 1;
+            }
+            if (nums[midIndex] > nums[leftIndex]) {
+                leftIndex = midIndex + 1;
+            } else {
+                rightIndex = midIndex;
+            }
+        }
+        return 0;
     }
 
     private int dfs(int[][] grid, int x, int y) {
