@@ -6,4 +6,6 @@ public interface LeetCodeService {
     Integer maxAreaOfIsland(int[][] grid);
 
     int rotation(int[] nums, int target);
+
+    Integer findLengthOfLCIS(int[] nums);
 }

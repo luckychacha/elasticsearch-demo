@@ -185,6 +185,27 @@ public class LeetCodeServiceImpl implements LeetCodeService {
         return binarySearch(leftIndex, lowestIndex - 1);
     }
 
+    @Override
+    public Integer findLengthOfLCIS(int[] nums) {
+        int max = 1;
+        int tmp = 1;
+
+        if (1 >= nums.length) {
+            return nums.length;
+        }
+
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] > nums[i-1]) {
+                tmp++;
+            } else {
+                tmp = 1;
+            }
+            max = Math.max(tmp, max);
+        }
+
+        return max;
+    }
+
     private int binarySearch(int leftIndex, int rightIndex) {
         while (leftIndex <= rightIndex) {
             int mid = leftIndex + (rightIndex - leftIndex) / 2;

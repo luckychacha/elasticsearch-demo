@@ -30,4 +30,10 @@ public class LeetCodeController {
     public Integer rotation(@RequestBody int[] nums, @PathVariable("target") int target) {
         return leetCodeService.rotation(nums, target);
     }
+
+
+    @PostMapping("findLengthOfLCIS")
+    public Integer findLengthOfLCIS(@RequestBody int[] nums) {
+        return leetCodeService.findLengthOfLCIS(nums);
+    }
 }
