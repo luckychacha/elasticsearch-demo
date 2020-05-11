@@ -36,4 +36,10 @@ public class LeetCodeController {
     public Integer findLengthOfLCIS(@RequestBody int[] nums) {
         return leetCodeService.findLengthOfLCIS(nums);
     }
+
+
+    @PostMapping("findKthLargest/{target}")
+    public Integer findKthLargest(@RequestBody int[] nums, @PathVariable("target") int target) {
+        return leetCodeService.findKthLargest(nums, target);
+    }
 }

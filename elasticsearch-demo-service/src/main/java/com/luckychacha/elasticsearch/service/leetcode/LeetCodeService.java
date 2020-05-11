@@ -8,4 +8,6 @@ public interface LeetCodeService {
     int rotation(int[] nums, int target);
 
     Integer findLengthOfLCIS(int[] nums);
+
+    Integer findKthLargest(int[] nums, int target);
 }

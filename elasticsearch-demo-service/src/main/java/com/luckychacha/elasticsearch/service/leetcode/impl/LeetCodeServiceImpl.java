@@ -185,6 +185,25 @@ public class LeetCodeServiceImpl implements LeetCodeService {
         return binarySearch(leftIndex, lowestIndex - 1);
     }
 
+    /**
+     * 最长连续递增序列
+     * 给定一个未经排序的整数数组，找到最长且连续的的递增序列。
+     *
+     * 示例 1:
+     *
+     * 输入: [1,3,5,4,7]
+     * 输出: 3
+     * 解释: 最长连续递增序列是 [1,3,5], 长度为3。
+     * 尽管 [1,3,5,7] 也是升序的子序列, 但它不是连续的，因为5和7在原数组里被4隔开。
+     * 示例 2:
+     *
+     * 输入: [2,2,2,2,2]
+     * 输出: 1
+     * 解释: 最长连续递增序列是 [2], 长度为1。
+     * 注意：数组长度不会超过10000。
+     * @param nums
+     * @return
+     */
     @Override
     public Integer findLengthOfLCIS(int[] nums) {
         int max = 1;
@@ -204,6 +223,61 @@ public class LeetCodeServiceImpl implements LeetCodeService {
         }
 
         return max;
+    }
+
+    /**
+     * 数组中的第K个最大元素
+     * 在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
+     *
+     * 示例 1:
+     *
+     * 输入: [3,2,1,5,6,4] 和 k = 2
+     * 输出: 5
+     * 示例 2:
+     *
+     * 输入: [3,2,3,1,2,4,5,5,6] 和 k = 4
+     * 输出: 4
+     * 说明:
+     *
+     * 你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。
+     * @param nums 目标数组
+     * @param k 第 K 大的元素
+     * @return Integer
+     */
+    @Override
+    public Integer findKthLargest(int[] nums, int k) {
+        /**
+         *1.排序
+         *2.返回第 n - k 个元素
+         **/
+//        if (k < 0 || k > nums.length) {
+//            return 0;
+//        }
+//
+//        int tmp;
+//        for (int i = 0; i < nums.length-1; i++) {
+//            for (int j = i+1; j < nums.length; j++) {
+//                if (nums[i] > nums[j]) {
+//                    tmp = nums[i];
+//                    nums[i] = nums[j];
+//                    nums[j] = tmp;
+//                }
+//            }
+//        }
+        // 总长度为 n，第 k 个元素，正序就是 (k - 1)，逆序 (n-k)  1,2   2[k-1]  1[2-k]
+//        return nums[nums.length - k];
+        // 方法 2，使用 堆
+        // 创建升序堆
+        PriorityQueue<Integer> heap = new PriorityQueue<Integer>((n1, n2) -> n1 - n2);
+        for (int i : nums) {
+            heap.add(i);
+            if (heap.size() > k) {
+                // 保持堆的深度始终与要查看的第 k 个元素一致。
+                heap.poll();
+            }
+        }
+        return heap.poll();
+
     }
 
     private int binarySearch(int leftIndex, int rightIndex) {
