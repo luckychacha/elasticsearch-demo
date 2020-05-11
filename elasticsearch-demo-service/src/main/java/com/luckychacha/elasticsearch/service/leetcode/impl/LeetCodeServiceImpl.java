@@ -264,7 +264,7 @@ public class LeetCodeServiceImpl implements LeetCodeService {
 //                }
 //            }
 //        }
-        // 总长度为 n，第 k 个元素，正序就是 (k - 1)，逆序 (n-k)  1,2   2[k-1]  1[2-k]
+        // 总长度为 n，第 k 个元素，正序就是 (k - 1)，逆序 (n-k) 
 //        return nums[nums.length - k];
         // 方法 2，使用 堆
         // 创建升序堆
