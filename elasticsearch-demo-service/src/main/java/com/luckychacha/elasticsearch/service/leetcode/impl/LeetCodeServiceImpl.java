@@ -246,14 +246,12 @@ public class LeetCodeServiceImpl implements LeetCodeService {
      */
     @Override
     public Integer findKthLargest(int[] nums, int k) {
-        /**
-         *1.排序
-         *2.返回第 n - k 个元素
-         **/
-//        if (k < 0 || k > nums.length) {
-//            return 0;
-//        }
+
+        if (k < 0 || k > nums.length) {
+            return 0;
+        }
 //
+//        // 1.排序
 //        int tmp;
 //        for (int i = 0; i < nums.length-1; i++) {
 //            for (int j = i+1; j < nums.length; j++) {
@@ -264,9 +262,12 @@ public class LeetCodeServiceImpl implements LeetCodeService {
 //                }
 //            }
 //        }
-        // 总长度为 n，第 k 个元素，正序就是 (k - 1)，逆序 (n-k) 
+//        // 2.总长度为 n，第 k 个元素，正序就是 (k - 1)，逆序 (n-k)
 //        return nums[nums.length - k];
+
+
         // 方法 2，使用 堆
+
         // 创建升序堆
         PriorityQueue<Integer> heap = new PriorityQueue<Integer>((n1, n2) -> n1 - n2);
         for (int i : nums) {
