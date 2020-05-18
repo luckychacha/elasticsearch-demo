@@ -113,8 +113,6 @@ public class LeetCodeServiceImpl implements LeetCodeService {
     @Override
     public Integer maxAreaOfIsland(int[][] grid) {
 
-        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
-
         if (grid.length <= 0 || grid[0].length <= 0) {
             return null;
         }
@@ -130,11 +128,16 @@ public class LeetCodeServiceImpl implements LeetCodeService {
 
             }
         }
-
-
         return result;
     }
 
+    private int dfs(int[][] grid, int x, int y) {
+        if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length || grid[x][y] != 1 || visited[x][y]) {
+            return 0;
+        }
+        visited[x][y] = true;
+        return 1 + dfs(grid, x, y-1) + dfs(grid, x, y+1) + dfs(grid, x-1, y) + dfs(grid, x+1, y);
+    }
     /**
      * 搜索旋转排序数组
      * 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
@@ -183,6 +186,42 @@ public class LeetCodeServiceImpl implements LeetCodeService {
             return binarySearch(lowestIndex, rightIndex);
         }
         return binarySearch(leftIndex, lowestIndex - 1);
+    }
+
+    private int binarySearch(int leftIndex, int rightIndex) {
+        while (leftIndex <= rightIndex) {
+            int mid = leftIndex + (rightIndex - leftIndex) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+
+            if (target < nums[mid]) {
+                rightIndex = mid - 1;
+            } else {
+                leftIndex = mid + 1;
+            }
+        }
+        return -1;
+    }
+
+    private int findLowestIndex(int leftIndex, int rightIndex) {
+        if (nums[leftIndex] < nums[rightIndex]) {
+            // 顺序数组
+            return 0;
+        }
+
+        while (leftIndex <= rightIndex) {
+            int midIndex = leftIndex + (rightIndex - leftIndex) / 2;
+            if (nums[midIndex] > nums[midIndex + 1]) {
+                return midIndex + 1;
+            }
+            if (nums[midIndex] > nums[leftIndex]) {
+                leftIndex = midIndex + 1;
+            } else {
+                rightIndex = midIndex;
+            }
+        }
+        return 0;
     }
 
     /**
@@ -250,78 +289,189 @@ public class LeetCodeServiceImpl implements LeetCodeService {
         if (k < 0 || k > nums.length) {
             return 0;
         }
-//
-//        // 1.排序
-//        int tmp;
-//        for (int i = 0; i < nums.length-1; i++) {
-//            for (int j = i+1; j < nums.length; j++) {
-//                if (nums[i] > nums[j]) {
-//                    tmp = nums[i];
-//                    nums[i] = nums[j];
-//                    nums[j] = tmp;
-//                }
-//            }
-//        }
-//        // 2.总长度为 n，第 k 个元素，正序就是 (k - 1)，逆序 (n-k)
-//        return nums[nums.length - k];
-
-
-        // 方法 2，使用 堆
-
-        // 创建升序堆
-        PriorityQueue<Integer> heap = new PriorityQueue<Integer>((n1, n2) -> n1 - n2);
-        for (int i : nums) {
-            heap.add(i);
-            if (heap.size() > k) {
-                // 保持堆的深度始终与要查看的第 k 个元素一致。
-                heap.poll();
+        // 1.创建前 k 个元素的小顶堆
+        buildHeap(nums, k);
+        // 2.将剩下的元素和堆顶部的元素进行比较，如果比他小，跳过，比他大，一次堆话排序
+        for (int i = k; i < nums.length; i++) {
+            if (nums[i] > nums[0]) {
+                swap(nums, 0, i);
+                heapify(nums, k, 0);
             }
         }
-        return heap.poll();
-
+        return nums[0];
     }
 
-    private int binarySearch(int leftIndex, int rightIndex) {
-        while (leftIndex <= rightIndex) {
-            int mid = leftIndex + (rightIndex - leftIndex) / 2;
-            if (nums[mid] == target) {
-                return mid;
-            }
-
-            if (target < nums[mid]) {
-                rightIndex = mid - 1;
-            } else {
-                leftIndex = mid + 1;
-            }
+    private void buildHeap(int[] nums, int k) {
+        // 从最后一个非叶子节点开始创建小顶堆 k/2 -1
+        for (int i = k/2 - 1; i >=0; i--) {
+            heapify(nums, k, i);
         }
-        return -1;
     }
 
-    private int findLowestIndex(int leftIndex, int rightIndex) {
-        if (nums[leftIndex] < nums[rightIndex]) {
-            // 顺序数组
-            return 0;
-        }
-
-        while (leftIndex <= rightIndex) {
-            int midIndex = leftIndex + (rightIndex - leftIndex) / 2;
-            if (nums[midIndex] > nums[midIndex + 1]) {
-                return midIndex + 1;
+    private void heapify(int[] nums, int k, int i) {
+        int min = i;
+        while(true) {
+            if ( (2*i + 1) < k && nums[2 * i + 1] < nums[i]) {
+                min = 2*i + 1;
             }
-            if (nums[midIndex] > nums[leftIndex]) {
-                leftIndex = midIndex + 1;
-            } else {
-                rightIndex = midIndex;
+            if ((2*i + 2) < k && nums[2 * i +2] < nums[min]) {
+                min = 2*i + 2;
             }
+            if (min == i) {
+                break;
+            }
+            swap(nums, min, i);
+            i = min;
         }
-        return 0;
     }
 
-    private int dfs(int[][] grid, int x, int y) {
-        if (x < 0 || y < 0 || x >= grid.length || y >= grid[0].length || grid[x][y] != 1 || visited[x][y]) {
-            return 0;
+    private void swap(int[] nums, int target, int source) {
+        int tmp = nums[target];
+        nums[target] = nums[source];
+        nums[source] = tmp;
+    }
+
+    @Override
+    public Integer longestConsecutive(int[] nums) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int max = 0;
+        for (int item : nums) {
+            if (map.containsKey(item)) {
+                continue;
+            }
+
+            int left = map.getOrDefault(item - 1, 0);
+            int right = map.getOrDefault(item + 1, 0);
+            int sum = left + 1 + right;
+            max = Math.max(max, sum);
+
+            map.put(item, -1);
+            map.put(item - left, sum);
+            map.put(item + right, sum);
         }
-        visited[x][y] = true;
-        return 1 + dfs(grid, x, y-1) + dfs(grid, x, y+1) + dfs(grid, x-1, y) + dfs(grid, x+1, y);
+
+        return max;
+    }
+
+    /**
+     * 第k个排列
+     * 给出集合 [1,2,3,…,n]，其所有元素共有 n! 种排列。
+     *
+     * 按大小顺序列出所有排列情况，并一一标记，当 n = 3 时, 所有排列如下：
+     *
+     * "123"
+     * "132"
+     * "213"
+     * "231"
+     * "312"
+     * "321"
+     * 给定 n 和 k，返回第 k 个排列。
+     *
+     * 说明：
+     *
+     * 给定 n 的范围是 [1, 9]。
+     * 给定 k 的范围是[1,  n!]。
+     * 示例 1:
+     *
+     * 输入: n = 3, k = 3
+     * 输出: "213"
+     * 示例 2:
+     *
+     * 输入: n = 4, k = 9
+     * 输出: "2314"
+     *
+     * @param n
+     * @param k
+     * @return String
+     */
+    @Override
+    public String getPermutation(int n, int k) {
+        /**
+         * 1. 生成 0 - (n-1) 的阶乘
+         * 2. 生成 0 - (n-1) 的桶，值为 1-n
+         * 3. 循环除法，并且移除元素，循环 n 次得到结果
+         */
+
+        int[] fac = new int[n];
+        fac[0] = 1;
+        for (int i= 1; i < n; i++) {
+            fac[i] = fac[i-1] * i;
+        }
+        log.info(String.valueOf(fac.length));
+        List<Integer> bucket = new ArrayList<Integer>();
+        for (int i = 0; i < n; i++) {
+            bucket.add(i+1);
+        }
+        log.info(String.valueOf(bucket.size()));
+
+
+        StringBuilder res = new StringBuilder();
+        k--;
+        for (int i = n-1; i >=0; i--) {
+            int index = k / fac[i];
+            res.append(bucket.get(index));
+            bucket.remove(index);
+            log.info("本轮的 k 值：" + k + " 除以：" + String.valueOf(fac[i])  + " 商：" + index + " 余数：" +  k % fac[i]);
+            k = k % fac[i];
+        }
+        return res.toString();
+    }
+
+    /**
+     * 朋友圈
+     * 班上有 N 名学生。其中有些人是朋友，有些则不是。他们的友谊具有是传递性。如果已知 A 是 B 的朋友，B 是 C 的朋友，那么我们可以认为 A 也是 C 的朋友。所谓的朋友圈，是指所有朋友的集合。
+     *
+     * 给定一个 N * N 的矩阵 M，表示班级中学生之间的朋友关系。如果M[i][j] = 1，表示已知第 i 个和 j 个学生互为朋友关系，否则为不知道。你必须输出所有学生中的已知的朋友圈总数。
+     *
+     * 示例 1:
+     *
+     * 输入:
+     * [[1,1,0],
+     *  [1,1,0],
+     *  [0,0,1]]
+     * 输出: 2
+     * 说明：已知学生0和学生1互为朋友，他们在一个朋友圈。
+     * 第2个学生自己在一个朋友圈。所以返回2。
+     * 示例 2:
+     *
+     * 输入:
+     * [[1,1,0],
+     *  [1,1,1],
+     *  [0,1,1]]
+     * 输出: 1
+     * 说明：已知学生0和学生1互为朋友，学生1和学生2互为朋友，所以学生0和学生2也是朋友，所以他们三个在一个朋友圈，返回1。
+     * 注意：
+     *
+     * N 在[1,200]的范围内。
+     * 对于所有学生，有M[i][i] = 1。
+     * 如果有M[i][j] = 1，则有M[j][i] = 1。
+     * @param grid
+     * @return int
+     */
+    @Override
+    public Integer findCircleNum(int[][] grid) {
+        int size = grid.length;
+        int count = 0;
+        boolean[] mark = new boolean[size];
+        for (int i = 0; i < size; i++) {
+            if (mark[i]) {
+                continue;
+            }
+            mark[i] = true;
+            count++;
+            dfsForCircleNum(grid, i, mark);
+        }
+        return count;
+    }
+
+    private void dfsForCircleNum(int[][] grid, int i, boolean[] mark) {
+        int size = grid.length;
+        for (int j = 0; j < size; j++) {
+            if (mark[j] || grid[i][j] != 1) {
+                continue;
+            }
+            mark[j] = true;
+            dfsForCircleNum(grid, j, mark);
+        }
     }
 }

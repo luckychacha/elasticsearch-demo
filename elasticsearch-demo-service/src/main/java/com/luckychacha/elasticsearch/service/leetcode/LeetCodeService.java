@@ -10,4 +10,10 @@ public interface LeetCodeService {
     Integer findLengthOfLCIS(int[] nums);
 
     Integer findKthLargest(int[] nums, int target);
+
+    Integer longestConsecutive(int[] nums);
+
+    String getPermutation(int n, int k);
+
+    Integer findCircleNum(int[][] grid);
 }

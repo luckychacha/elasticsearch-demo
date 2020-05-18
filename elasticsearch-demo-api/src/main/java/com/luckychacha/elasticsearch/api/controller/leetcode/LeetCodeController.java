@@ -37,9 +37,23 @@ public class LeetCodeController {
         return leetCodeService.findLengthOfLCIS(nums);
     }
 
-
     @PostMapping("findKthLargest/{target}")
     public Integer findKthLargest(@RequestBody int[] nums, @PathVariable("target") int target) {
         return leetCodeService.findKthLargest(nums, target);
+    }
+
+    @PostMapping("longestConsecutive")
+    public Integer longestConsecutive(@RequestBody int[] nums) {
+        return leetCodeService.longestConsecutive(nums);
+    }
+
+    @PostMapping("getPermutation/{k}")
+    public String getPermutation(@RequestBody int n, @PathVariable("k") int k) {
+        return leetCodeService.getPermutation(n, k);
+    }
+
+    @PostMapping("findCircleNum")
+    public Integer findCircleNum(@RequestBody int[][] grid) {
+        return leetCodeService.findCircleNum(grid);
     }
 }
